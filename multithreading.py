@@ -7,12 +7,13 @@ from Movements import Movements
 
 MOVEMENTS = Movements()
 
-exitFlag = 0
+EXITFLAG = 0
 
-class myThread(threading.Thread):
-    def __init__(self, threadID, name, counter):
+class MyThread(threading.Thread):
+    """My thread class using threading library"""
+    def __init__(self, thread_id, name, counter):
         threading.Thread.__init__(self)
-        self.threadID = threadID
+        self.thread_id = thread_id
         self.name = name
         self.counter = counter
     def run(self):
@@ -23,25 +24,26 @@ class myThread(threading.Thread):
 
 
 
-def print_time(threadName, counter, delay):
+def print_time(thread_name, counter, delay):
+    """Prints the time and moves beo's arm"""
     while counter:
-        if exitFlag:
-            threadName.exit()
+        if EXITFLAG:
+            thread_name.exit()
         time.sleep(delay)
-        if threadName == "Thread-1":
+        if thread_name == "Thread-1":
             MOVEMENTS.set_raw_angle(0, 180)
-        if threadName == "Thread-2":
+        if thread_name == "Thread-2":
             MOVEMENTS.set_raw_angle(0, 0)
-        print("%s: %s" % (threadName, time.ctime(time.time())))
+        print("%s: %s" % (thread_name, time.ctime(time.time())))
         counter -= 1
 
 # Create new threads
-thread1 = myThread(1, "Thread-1", 5)
-thread2 = myThread(2, "Thread-2", 6)
+THREAD1 = MyThread(1, "Thread-1", 5)
+THREAD2 = MyThread(2, "Thread-2", 6)
 
 # Start new Threads
-thread1.start()
+THREAD1.start()
 time.sleep(1)
-thread2.start()
+THREAD2.start()
 
 print("Exiting Main Thread")
