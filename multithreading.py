@@ -46,4 +46,13 @@ THREAD1.start()
 time.sleep(1)
 THREAD2.start()
 
+# Add threads to thread list
+threads = []
+threads.append(THREAD1)
+threads.append(THREAD2)
+
+# Wait for all threads to complete
+for thread in threads:
+    thread.join()
 print("Exiting Main Thread")
+
